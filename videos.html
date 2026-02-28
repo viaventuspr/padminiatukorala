@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Educational Videos | Padmini Athukorala</title>
+  <link rel="stylesheet" href="../css/style.css"/>
+  <style>
+    .videos-page { background: var(--dark); min-height: 100vh; }
+    .filter-bar {
+      display: flex; gap: 0.75rem; flex-wrap: wrap;
+      margin-bottom: 2.5rem;
+    }
+    .filter-btn {
+      padding: 0.55rem 1.25rem;
+      border-radius: 50px;
+      border: 1.5px solid rgba(255,255,255,0.15);
+      background: rgba(255,255,255,0.05);
+      color: rgba(255,255,255,0.6);
+      font-size: 0.84rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .filter-btn.active, .filter-btn:hover {
+      background: var(--emerald);
+      border-color: var(--emerald);
+      color: white;
+    }
+    .videos-masonry {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .video-card-full {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: var(--radius);
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .video-card-full:hover {
+      border-color: var(--emerald-light);
+      transform: translateY(-4px);
+      box-shadow: 0 16px 48px rgba(0,0,0,0.4);
+    }
+    .vcf-thumb {
+      position: relative;
+      aspect-ratio: 16/9;
+      background: linear-gradient(135deg, #0a3d28, #0a6b4c);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .vcf-thumb-pattern {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle at 30% 40%, rgba(20,184,127,0.2) 0%, transparent 60%);
+    }
+    .vcf-play {
+      width: 56px; height: 56px;
+      background: rgba(255,255,255,0.15);
+      border: 2px solid rgba(255,255,255,0.35);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      transition: all 0.3s;
+      z-index: 1;
+      backdrop-filter: blur(4px);
+    }
+    .video-card-full:hover .vcf-play {
+      background: var(--emerald);
+      border-color: var(--emerald);
+      transform: scale(1.15);
+    }
+    .vcf-subject {
+      position: absolute; top: 10px; left: 10px; z-index: 1;
+      font-size: 0.68rem; font-weight: 700;
+      padding: 0.2rem 0.65rem;
+      border-radius: 50px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .vcf-duration {
+      position: absolute; bottom: 8px; right: 8px; z-index: 1;
+      background: rgba(0,0,0,0.6);
+      color: white;
+      font-size: 0.72rem;
+      font-weight: 600;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+    }
+    .vcf-free {
+      position: absolute; top: 10px; right: 10px; z-index: 1;
+      background: var(--gold);
+      color: white;
+      font-size: 0.65rem;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: 50px;
+    }
+    .sub-math { background: rgba(10,107,76,0.8); color: white; }
+    .sub-sinhala { background: rgba(59,130,246,0.8); color: white; }
+    .sub-env { background: rgba(34,197,94,0.8); color: white; }
+    .sub-tips { background: rgba(212,146,10,0.8); color: white; }
+    .sub-iq { background: rgba(139,92,246,0.8); color: white; }
+    .vcf-info { padding: 1.25rem; }
+    .vcf-info h4 { color: white; font-size: 0.95rem; font-weight: 700; margin-bottom: 0.35rem; line-height: 1.4; }
+    .vcf-meta { display: flex; gap: 1rem; align-items: center; font-size: 0.75rem; color: rgba(255,255,255,0.45); }
+    .vcf-views::before { content: '👁 '; }
+    .vcf-desc { font-size: 0.8rem; color: rgba(255,255,255,0.55); margin-top: 0.5rem; line-height: 1.5; }
+
+    /* YOUTUBE LINK BANNER */
+    .yt-banner {
+      background: linear-gradient(135deg, #c4302b, #ff0000);
+      border-radius: var(--radius-lg);
+      padding: 2rem 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+      flex-wrap: wrap;
+    }
+    .yt-banner h3 { color: white; font-family: 'DM Serif Display', serif; font-size: 1.5rem; margin-bottom: 0.35rem; }
+    .yt-banner p { color: rgba(255,255,255,0.8); font-size: 0.9rem; }
+    .yt-btn {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      background: white;
+      color: #c4302b;
+      padding: 0.75rem 1.75rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 0.9rem;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .yt-btn:hover { transform: scale(1.04); box-shadow: 0 4px 16px rgba(0,0,0,0.2); }
+
+    /* VIDEO MODAL */
+    #videoModal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.9);
+      z-index: 9000;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+    }
+    #videoModal.open { display: flex; }
+    .modal-inner { position: relative; width: 100%; max-width: 920px; }
+    .modal-close {
+      position: absolute; top: -44px; right: 0;
+      color: rgba(255,255,255,0.8);
+      background: none; border: none;
+      font-size: 1.5rem; cursor: pointer;
+      padding: 0.5rem;
+      transition: color 0.2s;
+    }
+    .modal-close:hover { color: white; }
+    .modal-inner iframe { width: 100%; aspect-ratio: 16/9; border-radius: var(--radius); border: none; }
+
+    @media (max-width: 900px) { .videos-masonry { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 600px) { .videos-masonry { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+<nav class="navbar" id="navbar" style="background:rgba(15,31,26,0.8);backdrop-filter:blur(12px);border-bottom:1px solid rgba(255,255,255,0.06)">
+  <div class="nav-brand">
+    <div class="nav-logo-mark">🌿</div>
+    <div class="nav-brand-text">
+      <span class="nav-brand-name" style="color:white">Padmini Athukorala</span>
+      <span class="nav-brand-sub">Grade 5 Scholarship Teacher</span>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="../index.html" style="color:rgba(255,255,255,0.7)">Home</a></li>
+    <li><a href="about.html" style="color:rgba(255,255,255,0.7)">About</a></li>
+    <li><a href="subjects.html" style="color:rgba(255,255,255,0.7)">Subjects</a></li>
+    <li><a href="schedule.html" style="color:rgba(255,255,255,0.7)">Schedule</a></li>
+    <li><a href="videos.html" style="color:white;background:rgba(255,255,255,0.1)">Videos</a></li>
+    <li><a href="reviews.html" style="color:rgba(255,255,255,0.7)">Reviews</a></li>
+    <li><a href="contact.html" class="nav-cta">📞 Enroll Now</a></li>
+  </ul>
+  <div class="hamburger"><span style="background:white"></span><span style="background:white"></span><span style="background:white"></span></div>
+</nav>
+<div class="mobile-menu">
+  <ul>
+    <li><a href="../index.html">🏠 Home</a></li>
+    <li><a href="about.html">👩‍🏫 About</a></li>
+    <li><a href="subjects.html">📚 Subjects</a></li>
+    <li><a href="schedule.html">📅 Schedule</a></li>
+    <li><a href="videos.html">🎥 Videos</a></li>
+    <li><a href="reviews.html">⭐ Reviews</a></li>
+    <li><a href="contact.html">📞 Contact</a></li>
+  </ul>
+</div>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="page-header-badge">🎥 Free Educational Content</div>
+    <h1 class="si">ඉගෙනීමේ වීඩියෝ</h1>
+    <p class="si">Free YouTube lessons — ඕනෑ වෙලාවක, ඕනෑ ස්ථානයකදී ඉගෙනගන්න</p>
+  </div>
+</div>
+
+<div class="videos-page">
+  <section style="padding:3rem 2rem;">
+    <div class="container">
+      <!-- YT BANNER -->
+      <div class="yt-banner">
+        <div>
+          <h3 class="si">YouTube Channel Subscribe කරන්න</h3>
+          <p class="si">50+ free videos — Scholarship exam preparation</p>
+        </div>
+        <a href="https://youtube.com/@padminiteacher" target="_blank" class="yt-btn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="#c4302b"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+          Subscribe Now
+        </a>
+      </div>
+
+      <!-- FILTERS -->
+      <div class="filter-bar">
+        <button class="filter-btn active" onclick="filterVideos('all', this)">🎬 All Videos</button>
+        <button class="filter-btn" onclick="filterVideos('math', this)">📐 ගණිතය</button>
+        <button class="filter-btn" onclick="filterVideos('sinhala', this)">📖 සිංහල</button>
+        <button class="filter-btn" onclick="filterVideos('env', this)">🌿 පරිසරය</button>
+        <button class="filter-btn" onclick="filterVideos('tips', this)">💡 Tips</button>
+        <button class="filter-btn" onclick="filterVideos('iq', this)">🧠 IQ</button>
+      </div>
+
+      <!-- VIDEO GRID -->
+      <div class="videos-masonry" id="videoGrid">
+
+        <div class="video-card-full fade-up" data-cat="math" onclick="openVideoModal('dQw4w9WgXcQ')">
+          <div class="vcf-thumb">
+            <div class="vcf-thumb-pattern"></div>
+            <div class="vcf-play">▶</div>
+            <div class="vcf-subject sub-math">ගණිතය</div>
+            <div class="vcf-duration">42:15</div>
+            <div class="vcf-free">FREE</div>
+          </div>
+          <div class="vcf-info">
+            <h4 class="si">ශිෂ්‍යත්ව ගණිතය — ප්‍රතිශතය & භාගය | Full Lesson</h4>
+            <div class="vcf-meta"><span class="vcf-views">12.4K</span><span>📅 2024 Nov</span></div>
+            <p class="vcf-desc si">Fractions to percentages — step by step with examples</p>
+          </div>
+        </div>
+
+        <div class="video-card-full fade-up fade-up-delay-1" data-cat="math" onclick="openVideoModal('dQw4w9WgXcQ')">
+          <div class="vcf-thumb" style="background:linear-gradient(135deg,#0d1b4b,#1a237e)">
+            <div class="vcf-play">▶</div>
+            <div class="vcf-subject sub-math">ගණිතය</div>
+            <div class="vcf-duration">38:44</div>
+          </div>
+          <div class="vcf-info">
+            <h4 class="si">Word Problems — Hard Level | ශිෂ්‍යත්ව Special</h4>
+            <div class="vcf-meta"><span class="vcf-views">8.2K</span><span>📅 2024 Oct</span></div>
+            <p class="vcf-desc si">Scholarship level complex word problems with tricks</p>
+          </div>
+        </div>
+
+        <div class="video-card-full fade-up fade-up-delay-2" data-cat="sinhala" onclick="openVideoModal('dQw4w9WgXcQ')">
+          <div class="vcf-thumb" style="background:linear-gradient(135deg,#1a0a4b,#3949ab)">
+            <div class="vcf-play">▶</div>
+            <div class="vcf-subject sub-sinhala">සිංහල</div>
+            <div class="vcf-duration">28:30</div>
+            <div class="vcf-free">FREE</div>
+          </div>
+          <div class="vcf-info">
+            <h4 class="si">සිංහල රචනා ලිවීමේ Tips — Score 100/100</h4>
+            <div class="vcf-meta"><span class="vcf-views">15.6K</span><span>📅 2024 Sep</span></div>
+            <p class="vcf-desc si">Essay writing techniques for scholarship exam</p>
+          </div>
+        </div>
+
+        <div class="video-card-full fade-up" data-cat="env" onclick="openVideoModal('dQw4w9WgXcQ')">
+          <div class="vcf-thumb" style="background:linear-gradient(135deg,#0a3d1a,#2e7d32)">
+            <div class="vcf-play">▶</div>
+            <div class="vcf-subject sub-env">පරිසරය</div>
+            <div class="vcf-duration">45:00</div>
+            <div class="vcf-free">FREE</div>
+          </div>
+          <div class="vcf-info">
+            <h4 class="si">පරිසරය Full Revision — ශිෂ්‍යත්ව 2025</h4>
+            <div class="vcf-meta"><span class="vcf-views">19.1K</span><span>📅 2024 Aug</span></div>
+            <p class="vcf-desc si">Complete environmental studies for Grade 5 scholarship</p>
+          </div>
+        </div>
+
+        <div class="video-card-full fade-up fade-up-delay-1" data-cat="tips" onclick="openVideoModal('dQw4w9WgXcQ')">
+          <div class="vcf-thumb" style="background:linear-gradient(135deg,#4a2000,#e65100)">
+            <div class="vcf-play">▶</div>
+            <div class="vcf-subject sub-tips">Tips</div>
+            <div class="vcf-duration">15:22</div>
+          </div>
+          <div class="vcf-info">
+            <h4 class="si">Exam Day Tips — ශිෂ්‍යත්ව දිනයේ මෙය කරන්න</h4>
+            <div class="vcf-meta"><span class="vcf-views">22.3K</span><span>📅 2024 Jul</span></div>
+            <p class="vcf-desc si">What to do on exam day — time management & confidence</p>
+          </div>
+        </div>
+
+        <div class="video-card-full fade-up fade-up-delay-2" data-cat="iq" onclick="openVideoModal('dQw4w9WgXcQ')">
+          <div class="vcf-thumb" style="background:linear-gradient(135deg,#2a0a4b,#6a1b9a)">
+            <div class="vcf-play">▶</div>
+            <div class="vcf-subject sub-iq">IQ</div>
+            <div class="vcf-duration">33:10</div>
+            <div class="vcf-free">FREE</div>
+          </div>
+          <div class="vcf-info">
+            <h4 class="si">IQ Questions Practice — 50 Questions</h4>
+            <div class="vcf-meta"><span class="vcf-views">11.5K</span><span>📅 2024 Jun</span></div>
+            <p class="vcf-desc si">Logical thinking and IQ type questions with answers</p>
+          </div>
+        </div>
+
+        <div class="video-card-full fade-up" data-cat="math" onclick="openVideoModal('dQw4w9WgXcQ')">
+          <div class="vcf-thumb" style="background:linear-gradient(135deg,#003d2e,#00695c)">
+            <div class="vcf-play">▶</div>
+            <div class="vcf-subject sub-math">ගණිතය</div>
+            <div class="vcf-duration">25:40</div>
+          </div>
+          <div class="vcf-info">
+            <h4 class="si">Geometry — Areas & Perimeters | Easy Method</h4>
+            <div class="vcf-meta"><span class="vcf-views">7.8K</span><span>📅 2024 May</span></div>
+            <p class="vcf-desc si">Simple techniques for geometry in scholarship exam</p>
+          </div>
+        </div>
+
+        <div class="video-card-full fade-up fade-up-delay-1" data-cat="sinhala" onclick="openVideoModal('dQw4w9WgXcQ')">
+          <div class="vcf-thumb" style="background:linear-gradient(135deg,#0d1f3c,#1565c0)">
+            <div class="vcf-play">▶</div>
+            <div class="vcf-subject sub-sinhala">සිංහල</div>
+            <div class="vcf-duration">31:20</div>
+            <div class="vcf-free">FREE</div>
+          </div>
+          <div class="vcf-info">
+            <h4 class="si">ව්‍යාකරණය — Complete Guide 2025</h4>
+            <div class="vcf-meta"><span class="vcf-views">14.2K</span><span>📅 2024 Apr</span></div>
+            <p class="vcf-desc si">Sinhala grammar complete for scholarship exam</p>
+          </div>
+        </div>
+
+        <div class="video-card-full fade-up fade-up-delay-2" data-cat="tips" onclick="openVideoModal('dQw4w9WgXcQ')">
+          <div class="vcf-thumb" style="background:linear-gradient(135deg,#3d2b00,#f57f17)">
+            <div class="vcf-play">▶</div>
+            <div class="vcf-subject sub-tips">Tips</div>
+            <div class="vcf-duration">18:05</div>
+          </div>
+          <div class="vcf-info">
+            <h4 class="si">දරුවාගේ Study Routine | Parents Guide</h4>
+            <div class="vcf-meta"><span class="vcf-views">9.4K</span><span>📅 2024 Mar</span></div>
+            <p class="vcf-desc si">Best study habits for scholarship students — parents' role</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- VIDEO MODAL -->
+<div id="videoModal">
+  <div class="modal-inner">
+    <button class="modal-close" onclick="closeVideoModal()">✕ Close</button>
+    <iframe id="videoFrame" allowfullscreen></iframe>
+  </div>
+</div>
+
+<div class="whatsapp-float">
+  <div class="whatsapp-tooltip">Chat with us!</div>
+  <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</div>
+<script src="../js/main.js"></script>
+<script>
+function filterVideos(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.video-card-full').forEach(card => {
+    if (cat === 'all' || card.dataset.cat === cat) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+</script>
+</body>
+</html>

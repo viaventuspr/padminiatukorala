@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Subjects | Padmini Athukorala</title>
+  <link rel="stylesheet" href="../css/style.css"/>
+  <style>
+    .subjects-hero-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .subject-main-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      box-shadow: var(--shadow-sm);
+      border: 1px solid var(--border);
+      transition: all 0.3s;
+    }
+    .subject-main-card:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-lg);
+    }
+    .smc-header {
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      min-height: 140px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .smc-header-math { background: linear-gradient(135deg, #0a6b4c, #14b87f); }
+    .smc-header-sinhala { background: linear-gradient(135deg, #1a237e, #3949ab); }
+    .smc-header-env { background: linear-gradient(135deg, #2e7d32, #66bb6a); }
+    .smc-header-logic { background: linear-gradient(135deg, #e65100, #ff8f00); }
+    .smc-header-english { background: linear-gradient(135deg, #4a148c, #8e24aa); }
+    .smc-header-papers { background: linear-gradient(135deg, #b71c1c, #ef5350); }
+    .smc-emoji {
+      font-size: 3rem;
+      position: absolute;
+      top: 1.25rem; right: 1.25rem;
+      opacity: 0.3;
+    }
+    .smc-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.65rem;
+      border-radius: 50px;
+      margin-bottom: 0.5rem;
+    }
+    .smc-header h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.4rem;
+      color: white;
+    }
+    .smc-body { padding: 1.5rem; }
+    .smc-body p { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 1.25rem; line-height: 1.7; }
+    .topic-list { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .topic-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.82rem;
+      color: var(--text);
+      font-weight: 500;
+    }
+    .topic-list li::before {
+      content: '✓';
+      color: var(--emerald);
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    /* CURRICULUM TABLE */
+    .curriculum-section { background: white; }
+    .curriculum-tabs {
+      display: flex;
+      gap: 0.5rem;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+    }
+    .tab-btn {
+      padding: 0.6rem 1.25rem;
+      border-radius: 50px;
+      border: 2px solid var(--border);
+      background: var(--cream);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .tab-btn.active, .tab-btn:hover {
+      background: var(--emerald);
+      border-color: var(--emerald);
+      color: white;
+    }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+    .month-plan {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+    .month-card {
+      background: var(--cream);
+      border-radius: var(--radius);
+      padding: 1.25rem;
+      border: 1px solid var(--border);
+    }
+    .month-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      color: var(--emerald);
+      margin-bottom: 0.75rem;
+    }
+    .month-topics { list-style: none; }
+    .month-topics li {
+      font-size: 0.8rem;
+      color: var(--text);
+      padding: 0.3rem 0;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      line-height: 1.4;
+    }
+
+    /* FEES */
+    .fees-section { background: var(--cream); }
+    .fees-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
+    .fee-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 2.5rem 2rem;
+      border: 2px solid var(--border);
+      text-align: center;
+      transition: all 0.3s;
+    }
+    .fee-card.popular {
+      border-color: var(--emerald);
+      position: relative;
+      transform: scale(1.03);
+      box-shadow: var(--shadow-lg);
+    }
+    .popular-badge {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: white;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.3rem 1rem;
+      border-radius: 50px;
+      white-space: nowrap;
+    }
+    .fee-card h3 { font-size: 1rem; font-weight: 700; color: var(--text-muted); margin-bottom: 1rem; }
+    .fee-price { font-family: 'DM Serif Display', serif; font-size: 2.4rem; color: var(--dark); margin-bottom: 0.25rem; }
+    .fee-price span { font-size: 1rem; font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 400; color: var(--text-muted); }
+    .fee-period { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+    .fee-features { list-style: none; text-align: left; margin-bottom: 2rem; }
+    .fee-features li { font-size: 0.85rem; color: var(--text); padding: 0.4rem 0; display: flex; align-items: center; gap: 0.6rem; }
+    .fee-features li.check::before { content: '✓'; color: var(--emerald); font-weight: 700; }
+    .fee-features li.cross { color: var(--text-muted); }
+    .fee-features li.cross::before { content: '✗'; color: #ccc; }
+
+    @media (max-width: 900px) {
+      .subjects-hero-grid { grid-template-columns: 1fr 1fr; }
+      .month-plan { grid-template-columns: 1fr 1fr; }
+      .fees-grid { grid-template-columns: 1fr; }
+      .fee-card.popular { transform: scale(1); }
+    }
+    @media (max-width: 600px) {
+      .subjects-hero-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar scrolled" id="navbar">
+  <div class="nav-brand">
+    <div class="nav-logo-mark">🌿</div>
+    <div class="nav-brand-text">
+      <span class="nav-brand-name">Padmini Athukorala</span>
+      <span class="nav-brand-sub">Grade 5 Scholarship Teacher</span>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="subjects.html" class="active">Subjects</a></li>
+    <li><a href="schedule.html">Schedule</a></li>
+    <li><a href="videos.html">Videos</a></li>
+    <li><a href="reviews.html">Reviews</a></li>
+    <li><a href="contact.html" class="nav-cta">📞 Enroll Now</a></li>
+  </ul>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-menu">
+  <ul>
+    <li><a href="../index.html">🏠 Home</a></li>
+    <li><a href="about.html">👩‍🏫 About</a></li>
+    <li><a href="subjects.html">📚 Subjects</a></li>
+    <li><a href="schedule.html">📅 Schedule</a></li>
+    <li><a href="videos.html">🎥 Videos</a></li>
+    <li><a href="reviews.html">⭐ Reviews</a></li>
+    <li><a href="contact.html">📞 Contact</a></li>
+  </ul>
+</div>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="page-header-badge">📚 ඉගෙනීමේ ප්‍රෝග්‍රාම්</div>
+    <h1 class="si">ශිෂ්‍යත්ව විෂය නිර්දේශය</h1>
+    <p class="si">ශිෂ්‍යත්ව විභාගයේ සෑම විෂයයක්ම expert level ලෙස ආවරණය කරන comprehensive program</p>
+  </div>
+</div>
+
+<section style="background:var(--cream)">
+  <div class="container">
+    <div class="subjects-hero-grid">
+      <div class="subject-main-card fade-up">
+        <div class="smc-header smc-header-math">
+          <div class="smc-emoji">📐</div>
+          <div class="smc-badge">Most Important</div>
+          <h3 class="si">ගණිතය</h3>
+        </div>
+        <div class="smc-body">
+          <p class="si">ශිෂ්‍යත්ව ගණිතය — fractions, percentages, word problems ඇතුළු සම්පූර්ණ coverage.</p>
+          <ul class="topic-list">
+            <li class="si">භාගය සහ ප්‍රතිශතය</li>
+            <li>Word Problems (Advanced)</li>
+            <li class="si">දශමය සංඛ්‍යා</li>
+            <li>Speed, Distance & Time</li>
+            <li class="si">ජ්‍යාමිතිය</li>
+            <li>Data & Graphs</li>
+          </ul>
+        </div>
+      </div>
+      <div class="subject-main-card fade-up fade-up-delay-1">
+        <div class="smc-header smc-header-sinhala">
+          <div class="smc-emoji">📖</div>
+          <div class="smc-badge">Language</div>
+          <h3 class="si">සිංහල භාෂාව</h3>
+        </div>
+        <div class="smc-body">
+          <p class="si">Reading, grammar, comprehension — scholarship level Sinhala.</p>
+          <ul class="topic-list">
+            <li class="si">ව්‍යාකරණය</li>
+            <li class="si">නිබන්ධ / රචනා</li>
+            <li class="si">ගද්‍ය / පද්‍ය</li>
+            <li class="si">Comprehension</li>
+            <li class="si">ලිපි ලිවීම</li>
+            <li class="si">සාරාංශ</li>
+          </ul>
+        </div>
+      </div>
+      <div class="subject-main-card fade-up fade-up-delay-2">
+        <div class="smc-header smc-header-env">
+          <div class="smc-emoji">🌿</div>
+          <div class="smc-badge">Combined</div>
+          <h3 class="si">පරිසරය</h3>
+        </div>
+        <div class="smc-body">
+          <p class="si">Science + Social Studies combined — ශිෂ්‍යත්ව special subject.</p>
+          <ul class="topic-list">
+            <li class="si">ශාක හා සතුන්</li>
+            <li class="si">ශ්‍රී ලංකා ඉතිහාසය</li>
+            <li class="si">පරිසර ආරක්ෂාව</li>
+            <li>Body & Health</li>
+            <li class="si">ගව්ව / ලෝකය</li>
+            <li class="si">ශ්‍රී ලංකා ජනපද</li>
+          </ul>
+        </div>
+      </div>
+      <div class="subject-main-card fade-up">
+        <div class="smc-header smc-header-logic">
+          <div class="smc-emoji">💡</div>
+          <div class="smc-badge">Special</div>
+          <h3>Logical Thinking</h3>
+        </div>
+        <div class="smc-body">
+          <p class="si">IQ type questions, pattern recognition, problem solving</p>
+          <ul class="topic-list">
+            <li>Number Patterns</li>
+            <li>Analogies</li>
+            <li>Spatial Reasoning</li>
+            <li>Logical Sequences</li>
+            <li class="si">ප්‍රශ්න විසඳීම</li>
+          </ul>
+        </div>
+      </div>
+      <div class="subject-main-card fade-up fade-up-delay-1">
+        <div class="smc-header smc-header-papers">
+          <div class="smc-emoji">📝</div>
+          <div class="smc-badge">Exam Prep</div>
+          <h3>Past Papers</h3>
+        </div>
+        <div class="smc-body">
+          <p class="si">2010 — 2024 past papers, model papers, timed practice sessions</p>
+          <ul class="topic-list">
+            <li>10+ Years Papers</li>
+            <li>Timed Practice</li>
+            <li>Error Analysis</li>
+            <li>Mark Schemes</li>
+            <li>Special Tips</li>
+          </ul>
+        </div>
+      </div>
+      <div class="subject-main-card fade-up fade-up-delay-2">
+        <div class="smc-header smc-header-english">
+          <div class="smc-emoji">🧠</div>
+          <div class="smc-badge">Bonus</div>
+          <h3>Exam Strategy</h3>
+        </div>
+        <div class="smc-body">
+          <p class="si">Confidence building, time management, exam day tips</p>
+          <ul class="topic-list">
+            <li>Time Management</li>
+            <li class="si">Exam Anxiety කළමනාකරණය</li>
+            <li>Answering Techniques</li>
+            <li>Parent Guidance</li>
+            <li class="si">Progress Review</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CURRICULUM PLAN -->
+<section class="curriculum-section">
+  <div class="container">
+    <div class="section-tag">Curriculum</div>
+    <h2 class="section-title si">මාසික ඉගෙනීමේ සැලැස්ම</h2>
+    <p class="section-subtitle si">Subject select කරන්න</p>
+    <div class="curriculum-tabs" style="margin-top:1.5rem;">
+      <button class="tab-btn active" onclick="switchTab('math')">📐 ගණිතය</button>
+      <button class="tab-btn" onclick="switchTab('sinhala')">📖 සිංහල</button>
+      <button class="tab-btn" onclick="switchTab('env')">🌿 පරිසරය</button>
+    </div>
+    <div id="tab-math" class="tab-panel active">
+      <div class="month-plan">
+        <div class="month-card"><div class="month-label">Month 1</div><ul class="month-topics"><li class="si">සාමාන්‍ය ගණිතය Revision</li><li>Fractions Intro</li><li>Basic Word Problems</li></ul></div>
+        <div class="month-card"><div class="month-label">Month 2</div><ul class="month-topics"><li>Advanced Fractions</li><li>Percentages</li><li>Decimals</li></ul></div>
+        <div class="month-card"><div class="month-label">Month 3</div><ul class="month-topics"><li>Ratio & Proportion</li><li>Speed, Distance, Time</li><li class="si">ප්‍රශ්න ලිහීම</li></ul></div>
+        <div class="month-card"><div class="month-label">Month 4</div><ul class="month-topics"><li>Geometry</li><li>Area & Perimeter</li><li>Data & Graphs</li></ul></div>
+        <div class="month-card"><div class="month-label">Month 5</div><ul class="month-topics"><li>Complex Word Problems</li><li>Mixed Practice</li><li>Past Papers</li></ul></div>
+        <div class="month-card"><div class="month-label">Month 6</div><ul class="month-topics"><li>Full Mock Exams</li><li>Error Analysis</li><li>Exam Strategy</li></ul></div>
+        <div class="month-card"><div class="month-label">Month 7</div><ul class="month-topics"><li>Intensive Revision</li><li>Timed Practice</li><li class="si">දිනපතා Practice</li></ul></div>
+        <div class="month-card"><div class="month-label">Month 8</div><ul class="month-topics"><li>Final Mock Exams</li><li>Confidence Building</li><li class="si">Exam Tips</li></ul></div>
+      </div>
+    </div>
+    <div id="tab-sinhala" class="tab-panel">
+      <div class="month-plan">
+        <div class="month-card"><div class="month-label">Month 1-2</div><ul class="month-topics"><li class="si">ව්‍යාකරණය — Basics</li><li class="si">ශබ්ද වර්ග</li><li class="si">ක්‍රියා Revision</li></ul></div>
+        <div class="month-card"><div class="month-label">Month 3-4</div><ul class="month-topics"><li class="si">Comprehension Skills</li><li class="si">රචනා ලිවීම</li><li class="si">ලිපි ලිවීම</li></ul></div>
+        <div class="month-card"><div class="month-label">Month 5-6</div><ul class="month-topics"><li class="si">ගද්‍ය / පද්‍ය Analysis</li><li class="si">සාරාංශ</li><li>Past Papers</li></ul></div>
+        <div class="month-card"><div class="month-label">Month 7-8</div><ul class="month-topics"><li class="si">Mock Exams</li><li class="si">Error Correction</li><li class="si">Final Revision</li></ul></div>
+      </div>
+    </div>
+    <div id="tab-env" class="tab-panel">
+      <div class="month-plan">
+        <div class="month-card"><div class="month-label">Month 1-2</div><ul class="month-topics"><li class="si">ශ්‍රී ලංකා ඉතිහාසය</li><li class="si">ශාක හා සතුන්</li></ul></div>
+        <div class="month-card"><div class="month-label">Month 3-4</div><ul class="month-topics"><li class="si">Body & Health</li><li class="si">Weather & Climate</li></ul></div>
+        <div class="month-card"><div class="month-label">Month 5-6</div><ul class="month-topics"><li class="si">Environment Protection</li><li class="si">ජනපද / Districts</li></ul></div>
+        <div class="month-card"><div class="month-label">Month 7-8</div><ul class="month-topics"><li class="si">Full Revision</li><li>Mock Exams</li></ul></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FEES -->
+<section class="fees-section">
+  <div class="container">
+    <div style="text-align:center;margin-bottom:3rem;">
+      <div class="section-tag" style="justify-content:center">Class Fees</div>
+      <h2 class="section-title si">ගාස්තු / Fees</h2>
+      <p class="section-subtitle" style="margin:0 auto">Flexible class packages for every student.</p>
+    </div>
+    <div class="fees-grid">
+      <div class="fee-card fade-up">
+        <h3>Basic</h3>
+        <div class="fee-price">Rs. 2,500<span>/month</span></div>
+        <div class="fee-period si">සතිය 2 classes</div>
+        <ul class="fee-features">
+          <li class="check si">සතිය 2 × 2hr classes</li>
+          <li class="check">WhatsApp Support</li>
+          <li class="check si">Monthly Progress Report</li>
+          <li class="cross si">Extra Practice Papers</li>
+          <li class="cross">One-on-One Sessions</li>
+        </ul>
+        <a href="contact.html" class="btn btn-outline" style="width:100%;justify-content:center">Enroll</a>
+      </div>
+      <div class="fee-card popular fade-up fade-up-delay-1">
+        <div class="popular-badge">⭐ Most Popular</div>
+        <h3>Standard</h3>
+        <div class="fee-price">Rs. 4,000<span>/month</span></div>
+        <div class="fee-period si">සතිය 3 classes</div>
+        <ul class="fee-features">
+          <li class="check si">සතිය 3 × 2hr classes</li>
+          <li class="check">WhatsApp Support</li>
+          <li class="check si">Weekly Progress Report</li>
+          <li class="check">Extra Practice Papers</li>
+          <li class="cross">One-on-One Sessions</li>
+        </ul>
+        <a href="contact.html" class="btn btn-primary" style="width:100%;justify-content:center">Enroll</a>
+      </div>
+      <div class="fee-card fade-up fade-up-delay-2">
+        <h3>Premium</h3>
+        <div class="fee-price">Rs. 7,000<span>/month</span></div>
+        <div class="fee-period si">Unlimited + Individual</div>
+        <ul class="fee-features">
+          <li class="check si">Unlimited Group Classes</li>
+          <li class="check">24/7 WhatsApp Support</li>
+          <li class="check si">Daily Progress Track</li>
+          <li class="check">All Practice Papers</li>
+          <li class="check si">1-on-1 Monthly Session</li>
+        </ul>
+        <a href="contact.html" class="btn btn-gold" style="width:100%;justify-content:center">Enroll</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="whatsapp-float">
+  <div class="whatsapp-tooltip">Chat with us!</div>
+  <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</div>
+<footer class="footer">
+  <div class="footer-bottom" style="max-width:1100px;margin:0 auto;padding:2rem 0;">
+    <span>© 2025 Padmini Athukorala. All rights reserved.</span>
+    <span>Made with ❤️ for education</span>
+  </div>
+</footer>
+<script src="../js/main.js"></script>
+<script>
+function switchTab(id) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+</body>
+</html>

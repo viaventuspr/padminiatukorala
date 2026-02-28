@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Contact | Padmini Athukorala</title>
+  <link rel="stylesheet" href="../css/style.css"/>
+  <style>
+    .contact-page { background: var(--cream); }
+    .contact-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: 3rem;
+      align-items: start;
+    }
+    /* LEFT SIDE */
+    .contact-info-panel { position: sticky; top: 90px; }
+    .contact-card {
+      background: white;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-md);
+    }
+    .contact-card-header {
+      background: linear-gradient(135deg, var(--emerald), var(--emerald-light));
+      padding: 2rem;
+      color: white;
+    }
+    .contact-card-header h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+    .contact-card-header p { opacity: 0.85; font-size: 0.9rem; }
+    .contact-items { padding: 1.5rem; display: flex; flex-direction: column; gap: 0; }
+    .contact-item-row {
+      display: flex; align-items: center; gap: 1rem;
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .contact-item-row:last-child { border-bottom: none; }
+    .ci-icon {
+      width: 46px; height: 46px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+    .ci-green { background: rgba(10,107,76,0.1); }
+    .ci-wa { background: rgba(37,211,102,0.1); }
+    .ci-blue { background: rgba(59,130,246,0.1); }
+    .ci-red { background: rgba(239,68,68,0.1); }
+    .ci-label { font-size: 0.72rem; color: var(--text-muted); font-weight: 500; margin-bottom: 0.1rem; }
+    .ci-value { font-size: 0.92rem; font-weight: 700; color: var(--dark); }
+    .ci-value a { color: inherit; transition: color 0.2s; }
+    .ci-value a:hover { color: var(--emerald); }
+
+    /* WHATSAPP BUTTON LARGE */
+    .wa-big-btn {
+      margin: 0 1.5rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      background: linear-gradient(135deg, #25d366, #128c7e);
+      color: white;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 1rem;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: all 0.3s;
+      box-shadow: 0 4px 20px rgba(37,211,102,0.35);
+    }
+    .wa-big-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(37,211,102,0.45); }
+
+    /* MAP */
+    .map-preview {
+      margin: 0 1.5rem 1.5rem;
+      height: 150px;
+      background: linear-gradient(135deg, #e8f5e9, #f1f8e9);
+      border-radius: var(--radius);
+      border: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column;
+      gap: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .map-preview:hover { border-color: var(--emerald); }
+    .map-preview .icon { font-size: 2rem; }
+    .map-preview p { font-size: 0.82rem; color: var(--text-muted); }
+    .map-preview span { font-size: 0.75rem; color: var(--emerald); font-weight: 600; }
+
+    /* FORM */
+    .enrollment-form {
+      background: white;
+      border-radius: var(--radius-lg);
+      padding: 2.5rem;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+    .form-header { margin-bottom: 2rem; }
+    .form-header h3 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.75rem;
+      color: var(--dark);
+      margin-bottom: 0.5rem;
+    }
+    .form-header p { color: var(--text-muted); font-size: 0.9rem; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+    .form-full { grid-column: span 2; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-group label {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+    .form-group input, .form-group select, .form-group textarea {
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 0.75rem 1rem;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      font-size: 0.9rem;
+      color: var(--text);
+      background: var(--cream);
+      outline: none;
+      transition: all 0.2s;
+      width: 100%;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+      border-color: var(--emerald);
+      background: white;
+      box-shadow: 0 0 0 3px rgba(10,107,76,0.08);
+    }
+    .form-group textarea { min-height: 110px; resize: vertical; }
+    .form-class-pref {
+      display: grid; grid-template-columns: repeat(3,1fr); gap: 0.75rem;
+    }
+    .pref-option {
+      display: flex; flex-direction: column; align-items: center;
+      gap: 0.4rem; padding: 0.85rem;
+      border: 2px solid var(--border);
+      border-radius: var(--radius-sm);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+      background: var(--cream);
+    }
+    .pref-option:hover, .pref-option.selected {
+      border-color: var(--emerald);
+      background: rgba(10,107,76,0.05);
+    }
+    .pref-option input { display: none; }
+    .pref-icon { font-size: 1.5rem; }
+    .pref-label { font-size: 0.78rem; font-weight: 600; color: var(--text); }
+    .submit-section { margin-top: 2rem; }
+    .submit-btn {
+      width: 100%;
+      padding: 1rem;
+      border-radius: var(--radius-sm);
+      background: linear-gradient(135deg, var(--emerald), var(--emerald-light));
+      color: white;
+      font-weight: 700;
+      font-size: 1rem;
+      border: none;
+      cursor: pointer;
+      transition: all 0.3s;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      box-shadow: 0 4px 16px rgba(10,107,76,0.3);
+    }
+    .submit-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(10,107,76,0.4); }
+    .submit-note { text-align: center; font-size: 0.78rem; color: var(--text-muted); margin-top: 0.75rem; }
+
+    /* FAQ */
+    .faq-section { background: white; }
+    .faq-list { display: flex; flex-direction: column; gap: 0; }
+    .faq-item {
+      border-bottom: 1px solid var(--border);
+      overflow: hidden;
+    }
+    .faq-q {
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.25rem 0;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.95rem;
+      color: var(--dark);
+      user-select: none;
+    }
+    .faq-q .arrow { font-size: 1rem; transition: transform 0.3s; color: var(--emerald); }
+    .faq-item.open .faq-q .arrow { transform: rotate(45deg); }
+    .faq-a {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s;
+      padding: 0;
+    }
+    .faq-item.open .faq-a { max-height: 300px; padding-bottom: 1.25rem; }
+
+    @media (max-width: 900px) {
+      .contact-layout { grid-template-columns: 1fr; }
+      .contact-info-panel { position: static; }
+      .form-grid { grid-template-columns: 1fr; }
+      .form-full { grid-column: span 1; }
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar scrolled" id="navbar">
+  <div class="nav-brand">
+    <div class="nav-logo-mark">🌿</div>
+    <div class="nav-brand-text">
+      <span class="nav-brand-name">Padmini Athukorala</span>
+      <span class="nav-brand-sub">Grade 5 Scholarship Teacher</span>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="subjects.html">Subjects</a></li>
+    <li><a href="schedule.html">Schedule</a></li>
+    <li><a href="videos.html">Videos</a></li>
+    <li><a href="reviews.html">Reviews</a></li>
+    <li><a href="contact.html" class="nav-cta active">📞 Enroll Now</a></li>
+  </ul>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-menu">
+  <ul>
+    <li><a href="../index.html">🏠 Home</a></li>
+    <li><a href="about.html">👩‍🏫 About</a></li>
+    <li><a href="subjects.html">📚 Subjects</a></li>
+    <li><a href="schedule.html">📅 Schedule</a></li>
+    <li><a href="videos.html">🎥 Videos</a></li>
+    <li><a href="reviews.html">⭐ Reviews</a></li>
+    <li><a href="contact.html">📞 Contact</a></li>
+  </ul>
+</div>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="page-header-badge">📞 Enroll Today</div>
+    <h1 class="si">ලියාපදිංචි කරන්න</h1>
+    <p class="si">දරුවාගේ scholarship journey ආරම්භ කරන්න — free trial class ලබා ගන්න</p>
+  </div>
+</div>
+
+<div class="contact-page">
+  <section>
+    <div class="container">
+      <div class="contact-layout">
+        <!-- INFO PANEL -->
+        <div class="contact-info-panel fade-up">
+          <div class="contact-card">
+            <div class="contact-card-header">
+              <h3 class="si">සම්බන්ධ වන්න</h3>
+              <p class="si">Monday – Saturday, 8AM – 8PM</p>
+            </div>
+            <div class="contact-items">
+              <div class="contact-item-row">
+                <div class="ci-icon ci-green">📞</div>
+                <div>
+                  <div class="ci-label">Phone</div>
+                  <div class="ci-value"><a href="tel:+94771234567">+94 77 123 4567</a></div>
+                </div>
+              </div>
+              <div class="contact-item-row">
+                <div class="ci-icon ci-wa">💬</div>
+                <div>
+                  <div class="ci-label">WhatsApp</div>
+                  <div class="ci-value"><a href="https://wa.me/94771234567">+94 77 123 4567</a></div>
+                </div>
+              </div>
+              <div class="contact-item-row">
+                <div class="ci-icon ci-blue">✉️</div>
+                <div>
+                  <div class="ci-label">Email</div>
+                  <div class="ci-value"><a href="mailto:padmini@gmail.com">padmini@gmail.com</a></div>
+                </div>
+              </div>
+              <div class="contact-item-row">
+                <div class="ci-icon ci-red">📍</div>
+                <div>
+                  <div class="ci-label">Location</div>
+                  <div class="ci-value si">Colombo 07, Sri Lanka</div>
+                </div>
+              </div>
+            </div>
+            <div class="wa-big-btn" onclick="window.open('https://wa.me/94771234567?text=ආයුබෝවන්! Classes ගැන දැනගන්න කැමතියි.','_blank')">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+              <span class="si">WhatsApp හරහා සම්බන්ධ වන්න</span>
+            </div>
+            <div class="map-preview" onclick="window.open('https://maps.google.com?q=Colombo+07','_blank')">
+              <div class="icon">🗺️</div>
+              <p>Colombo 07, Sri Lanka</p>
+              <span>Click to Open in Google Maps →</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- FORM -->
+        <div class="fade-up fade-up-delay-1">
+          <div class="enrollment-form">
+            <div class="form-header">
+              <h3 class="si">Class Enrollment Form</h3>
+              <p class="si">Form fill කරන්න — ගුරුතුමිය connect කරනවා</p>
+            </div>
+            <form id="contactForm">
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="si">දරුවාගේ නම *</label>
+                  <input type="text" id="name" placeholder="Full Name" required/>
+                </div>
+                <div class="form-group">
+                  <label class="si">දෙමාපිය නම *</label>
+                  <input type="text" placeholder="Parent Name" required/>
+                </div>
+                <div class="form-group">
+                  <label>Phone Number *</label>
+                  <input type="tel" id="phone" placeholder="+94 77 XXX XXXX" required/>
+                </div>
+                <div class="form-group">
+                  <label>WhatsApp Number</label>
+                  <input type="tel" placeholder="+94 77 XXX XXXX"/>
+                </div>
+                <div class="form-group form-full">
+                  <label id="grade" class="si">ශ්‍රේණිය *</label>
+                  <select required>
+                    <option value="" disabled selected class="si">ශ්‍රේණිය select කරන්න</option>
+                    <option value="grade3">Grade 3</option>
+                    <option value="grade4">Grade 4</option>
+                    <option value="grade5">Grade 5 (Scholarship Year)</option>
+                  </select>
+                </div>
+                <div class="form-group form-full">
+                  <label class="si">Class Mode *</label>
+                  <div class="form-class-pref">
+                    <label class="pref-option" onclick="this.classList.toggle('selected')">
+                      <input type="checkbox" name="mode" value="physical"/>
+                      <div class="pref-icon">🏫</div>
+                      <div class="pref-label">Physical</div>
+                    </label>
+                    <label class="pref-option" onclick="this.classList.toggle('selected')">
+                      <input type="checkbox" name="mode" value="online"/>
+                      <div class="pref-icon">💻</div>
+                      <div class="pref-label">Online</div>
+                    </label>
+                    <label class="pref-option" onclick="this.classList.toggle('selected')">
+                      <input type="checkbox" name="mode" value="both"/>
+                      <div class="pref-icon">🔄</div>
+                      <div class="pref-label">Both</div>
+                    </label>
+                  </div>
+                </div>
+                <div class="form-group form-full">
+                  <label class="si">Message / දරුවා ගැන දැනගන්න ඕනෑ දේ</label>
+                  <textarea placeholder="Share anything about your child's current level, specific weaknesses, or any questions..."></textarea>
+                </div>
+              </div>
+              <div class="submit-section">
+                <button type="submit" class="submit-btn">🎓 Enroll Now — Free Trial Class</button>
+                <p class="submit-note si">Form submit කිරීමෙන් WhatsApp message ද send වෙනවා. ගුරුතුමිය 24hr ඇතුළත contact කරනවා.</p>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="faq-section">
+    <div class="container">
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:start">
+        <div>
+          <div class="section-tag">Common Questions</div>
+          <h2 class="section-title si">නිතර අසන ප්‍රශ්න</h2>
+        </div>
+        <div class="faq-list fade-up">
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)"><span class="si">Trial class free ද?</span><span class="arrow">+</span></div>
+            <div class="faq-a si">ඔව්, first class free trial ලෙස ලබා ගත හැකිය. Payment ඊට පසු decide කළ හැකිය.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)"><span class="si">Online classes ද හොඳද?</span><span class="arrow">+</span></div>
+            <div class="faq-a si">ඔව්, online classes physical ට ම effective. Zoom/Meet හරහා interactive lessons, homework, Q&A — සෑම දෙයක්ම ආවරණය කෙරේ.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)"><span>Group size?</span><span class="arrow">+</span></div>
+            <div class="faq-a si">Maximum 8 students per batch. Individual attention සහතික කිරීමට small groups.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)"><span class="si">Monthly payment ද?</span><span class="arrow">+</span></div>
+            <div class="faq-a si">ඔව්, monthly payment. Bank transfer, cash — ඕනෑ method.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-q" onclick="toggleFaq(this)"><span class="si">Grade 3 or 4 start කරන්නද?</span><span class="arrow">+</span></div>
+            <div class="faq-a si">Early start ideal. Grade 3 or 4 සිට foundation ගොඩ නඟා Grade 5 exam ට ready කිරීම best approach.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<div class="whatsapp-float">
+  <div class="whatsapp-tooltip">Chat with us!</div>
+  <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</div>
+<footer class="footer">
+  <div class="footer-bottom" style="max-width:1100px;margin:0 auto;padding:2rem 0;">
+    <span>© 2025 Padmini Athukorala. All rights reserved.</span>
+  </div>
+</footer>
+<script src="../js/main.js"></script>
+<script>
+function toggleFaq(el) {
+  const item = el.parentElement;
+  const wasOpen = item.classList.contains('open');
+  document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+  if (!wasOpen) item.classList.add('open');
+}
+</script>
+</body>
+</html>

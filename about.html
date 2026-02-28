@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>About | Padmini Athukorala</title>
+  <link rel="stylesheet" href="../css/style.css"/>
+  <style>
+    .about-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.6fr;
+      gap: 5rem;
+      align-items: start;
+    }
+    .about-sticky { position: sticky; top: 90px; }
+    .profile-card {
+      background: white;
+      border-radius: 24px;
+      overflow: hidden;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid var(--border);
+    }
+    .profile-card-header {
+      background: linear-gradient(135deg, var(--emerald), var(--emerald-light));
+      padding: 3rem 2rem 2rem;
+      text-align: center;
+      position: relative;
+    }
+    .profile-avatar {
+      width: 110px; height: 110px;
+      background: rgba(255,255,255,0.15);
+      border-radius: 50%;
+      margin: 0 auto 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3.5rem;
+      border: 4px solid rgba(255,255,255,0.3);
+      backdrop-filter: blur(8px);
+    }
+    .profile-card-header h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 1.6rem;
+      color: white;
+    }
+    .profile-card-header p { color: rgba(255,255,255,0.8); font-size: 0.9rem; margin-top: 0.25rem; }
+    .profile-body { padding: 1.5rem; }
+    .profile-info-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      padding: 0.85rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .profile-info-item:last-child { border-bottom: none; }
+    .pi-icon {
+      width: 38px; height: 38px;
+      background: var(--cream);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.1rem;
+      flex-shrink: 0;
+    }
+    .pi-label { font-size: 0.72rem; color: var(--text-muted); font-weight: 500; }
+    .pi-value { font-size: 0.88rem; font-weight: 600; color: var(--text); }
+    .profile-ctas { padding: 1.5rem; padding-top: 0; display: flex; flex-direction: column; gap: 0.75rem; }
+
+    /* STORY */
+    .story-section h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2rem;
+      color: var(--dark);
+      margin-bottom: 1rem;
+    }
+    .story-section p { color: var(--text-muted); margin-bottom: 1.25rem; line-height: 1.85; }
+    .story-section p strong { color: var(--emerald); font-weight: 700; }
+
+    /* QUALIFICATIONS */
+    .qual-list { margin-top: 2rem; }
+    .qual-item {
+      display: flex;
+      gap: 1.25rem;
+      margin-bottom: 1.5rem;
+      align-items: flex-start;
+    }
+    .qual-year {
+      background: var(--cream);
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 0.5rem 0.75rem;
+      font-size: 0.78rem;
+      font-weight: 700;
+      color: var(--emerald);
+      white-space: nowrap;
+      text-align: center;
+      min-width: 68px;
+    }
+    .qual-content { padding-top: 0.15rem; }
+    .qual-content h4 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.2rem; }
+    .qual-content span { font-size: 0.82rem; color: var(--text-muted); }
+
+    /* TEACHING METHOD */
+    .method-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.25rem;
+      margin-top: 1.5rem;
+    }
+    .method-step {
+      background: white;
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    .method-step::before {
+      content: attr(data-step);
+      position: absolute;
+      top: -10px; right: 10px;
+      font-family: 'DM Serif Display', serif;
+      font-size: 5rem;
+      color: rgba(10,107,76,0.05);
+      font-weight: 700;
+      line-height: 1;
+    }
+    .method-step h4 { font-size: 0.92rem; font-weight: 700; margin-bottom: 0.4rem; color: var(--emerald); }
+    .method-step p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
+
+    /* AWARDS */
+    .awards-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-top: 1.5rem; }
+    .award-card {
+      background: linear-gradient(135deg, var(--gold-pale), #fff9e6);
+      border: 1px solid rgba(212,146,10,0.2);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .award-icon { font-size: 2.2rem; margin-bottom: 0.75rem; }
+    .award-card h4 { font-size: 0.85rem; font-weight: 700; color: var(--dark); margin-bottom: 0.25rem; }
+    .award-card p { font-size: 0.75rem; color: var(--text-muted); }
+
+    @media (max-width: 900px) {
+      .about-layout { grid-template-columns: 1fr; }
+      .about-sticky { position: static; }
+      .method-grid { grid-template-columns: 1fr; }
+      .awards-grid { grid-template-columns: 1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar scrolled" id="navbar">
+  <div class="nav-brand">
+    <div class="nav-logo-mark">🌿</div>
+    <div class="nav-brand-text">
+      <span class="nav-brand-name">Padmini Athukorala</span>
+      <span class="nav-brand-sub">Grade 5 Scholarship Teacher</span>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="subjects.html">Subjects</a></li>
+    <li><a href="schedule.html">Schedule</a></li>
+    <li><a href="videos.html">Videos</a></li>
+    <li><a href="reviews.html">Reviews</a></li>
+    <li><a href="contact.html" class="nav-cta">📞 Enroll Now</a></li>
+  </ul>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-menu">
+  <ul>
+    <li><a href="../index.html">🏠 Home</a></li>
+    <li><a href="about.html">👩‍🏫 About</a></li>
+    <li><a href="subjects.html">📚 Subjects</a></li>
+    <li><a href="schedule.html">📅 Schedule</a></li>
+    <li><a href="videos.html">🎥 Videos</a></li>
+    <li><a href="reviews.html">⭐ Reviews</a></li>
+    <li><a href="contact.html">📞 Contact</a></li>
+  </ul>
+</div>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="page-header-badge">👩‍🏫 About the Teacher</div>
+    <h1>Padmini Athukorala</h1>
+    <p class="si">ශිෂ්‍යත්ව ගුරුතුමිය — 15+ වසරක් දරුවන්ගේ සිහිනය ජයගැනීමට සහය දෙමු</p>
+  </div>
+</div>
+
+<section style="background:var(--cream);">
+  <div class="container">
+    <div class="about-layout">
+      <div class="about-sticky fade-up">
+        <div class="profile-card">
+          <div class="profile-card-header">
+            <div class="profile-avatar">👩‍🏫</div>
+            <h2>Padmini Athukorala</h2>
+            <p class="si">ශිෂ්‍යත්ව ගුරුතුමිය</p>
+          </div>
+          <div class="profile-body">
+            <div class="profile-info-item">
+              <div class="pi-icon">🎓</div>
+              <div>
+                <div class="pi-label">Qualification</div>
+                <div class="pi-value">B.Ed — University of Colombo</div>
+              </div>
+            </div>
+            <div class="profile-info-item">
+              <div class="pi-icon">📅</div>
+              <div>
+                <div class="pi-label">Experience</div>
+                <div class="pi-value">15+ Years Teaching</div>
+              </div>
+            </div>
+            <div class="profile-info-item">
+              <div class="pi-icon">👥</div>
+              <div>
+                <div class="pi-label si">ශිෂ්‍යයන්</div>
+                <div class="pi-value">500+ Scholarship Students</div>
+              </div>
+            </div>
+            <div class="profile-info-item">
+              <div class="pi-icon">📍</div>
+              <div>
+                <div class="pi-label">Location</div>
+                <div class="pi-value">Colombo, Sri Lanka</div>
+              </div>
+            </div>
+            <div class="profile-info-item">
+              <div class="pi-icon">💻</div>
+              <div>
+                <div class="pi-label">Class Mode</div>
+                <div class="pi-value">Physical + Online</div>
+              </div>
+            </div>
+            <div class="profile-info-item">
+              <div class="pi-icon">⭐</div>
+              <div>
+                <div class="pi-label">Rating</div>
+                <div class="pi-value">4.9/5 (200+ Reviews)</div>
+              </div>
+            </div>
+          </div>
+          <div class="profile-ctas">
+            <a href="contact.html" class="btn btn-primary" style="justify-content:center">🎓 Enroll Now</a>
+            <a href="javascript:void(0)" class="btn btn-whatsapp" style="justify-content:center" onclick="document.querySelector('.whatsapp-float').click()">
+              💬 WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="story-section">
+        <div class="fade-up">
+          <div class="section-tag">My Story</div>
+          <h2 class="si">දරුවන්ගේ ජීවිතය වෙනස් කිරීමේ ගමන</h2>
+          <p class="si">මගේ නම <strong>Padmini Athukorala</strong>. 15+ වසරකට අධික කාලයක් ශිෂ්‍යත්ව දරුවන් ඉගැන්වීමට කැප කළ ගුරුවරියකි. ශ්‍රී ලංකාවේ හොඳ ජාතික පාසල්වලට ඇතුළු වීමේ ස්වර්ණ ද්වාරය — Grade 5 ශිෂ්‍යත්ව විභාගය — දරුවාට ජයගැනීමට නිවැරදිම ක්‍රමවේදය සොයා ගැනීමට මා ජීවිතය කැප කළෙමි.</p>
+          <p class="si">ශිෂ්‍යයන් 500+ දෙනෙකු ශිෂ්‍යත්ව ලබා ගෙන තිබේ. <strong>95% pass rate</strong> — ශ්‍රී ලංකාවේ ඉහළම ශිෂ්‍යත්ව pass rates අතරින් එකකි.</p>
+          <p class="si">ගණිතය, සිංහල, පරිසරය — සෑම විෂයයකම expert guidance. දරුවාගේ weaknesses identify කොට targeted practice — මෙය මගේ method.</p>
+        </div>
+
+        <div class="qual-list fade-up">
+          <div class="section-tag">Education & Qualifications</div>
+          <div class="qual-item">
+            <div class="qual-year">2005</div>
+            <div class="qual-content">
+              <h4>B.Ed (Primary Education)</h4>
+              <span>University of Colombo — First Class Honours</span>
+            </div>
+          </div>
+          <div class="qual-item">
+            <div class="qual-year">2008</div>
+            <div class="qual-content">
+              <h4 class="si">ශිෂ්‍යත්ව Specialist Training</h4>
+              <span>National Institute of Education, Sri Lanka</span>
+            </div>
+          </div>
+          <div class="qual-item">
+            <div class="qual-year">2015</div>
+            <div class="qual-content">
+              <h4>Advanced Diploma in Educational Psychology</h4>
+              <span>University of Kelaniya</span>
+            </div>
+          </div>
+          <div class="qual-item">
+            <div class="qual-year">2020</div>
+            <div class="qual-content">
+              <h4>Online Teaching Certificate</h4>
+              <span>Google for Education Certified Trainer</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="fade-up" style="margin-top:3rem;">
+          <div class="section-tag">Teaching Methodology</div>
+          <h3 class="section-title" style="font-size:1.6rem" class="si">Teaching Method</h3>
+          <div class="method-grid">
+            <div class="method-step" data-step="1">
+              <h4>🔍 Assess & Identify</h4>
+              <p class="si">දරුවාගේ ශක්තිය සහ දුර්වලතා identify කිරීම</p>
+            </div>
+            <div class="method-step" data-step="2">
+              <h4>🎯 Targeted Practice</h4>
+              <p class="si">Weak areas fix කිරීමට specific exercises</p>
+            </div>
+            <div class="method-step" data-step="3">
+              <h4>📊 Progress Track</h4>
+              <p class="si">සෑම සතියකම progress measure කොට parents inform කිරීම</p>
+            </div>
+            <div class="method-step" data-step="4">
+              <h4>🏆 Exam Ready</h4>
+              <p class="si">Past papers, timed tests, exam strategy training</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="fade-up" style="margin-top:3rem;">
+          <div class="section-tag">Awards & Recognition</div>
+          <div class="awards-grid">
+            <div class="award-card">
+              <div class="award-icon">🏆</div>
+              <h4>Best Teacher Award</h4>
+              <p>Ministry of Education, 2022</p>
+            </div>
+            <div class="award-card">
+              <div class="award-icon">⭐</div>
+              <h4>Excellence in Education</h4>
+              <p>Provincial Council, 2020</p>
+            </div>
+            <div class="award-card">
+              <div class="award-icon">🎖️</div>
+              <h4>Community Service</h4>
+              <p>Free classes for underprivileged students</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="whatsapp-float">
+  <div class="whatsapp-tooltip">Chat with us!</div>
+  <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</div>
+<footer class="footer">
+  <div class="footer-bottom" style="max-width:1100px;margin:0 auto;padding:2rem 0;">
+    <span>© 2025 Padmini Athukorala. All rights reserved.</span>
+    <span>Made with ❤️ for education</span>
+  </div>
+</footer>
+<script src="../js/main.js"></script>
+</body>
+</html>

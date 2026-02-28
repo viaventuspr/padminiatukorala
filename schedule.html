@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Schedule | Padmini Athukorala</title>
+  <link rel="stylesheet" href="../css/style.css"/>
+  <style>
+    .schedule-wrap { background: var(--cream); }
+    .mode-tabs { display: flex; gap: 1rem; margin-bottom: 3rem; flex-wrap: wrap; }
+    .mode-tab {
+      display: flex; align-items: center; gap: 0.6rem;
+      padding: 0.85rem 1.75rem;
+      border-radius: 50px;
+      border: 2px solid var(--border);
+      background: white;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      transition: all 0.25s;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+    }
+    .mode-tab.active {
+      background: var(--emerald);
+      border-color: var(--emerald);
+      color: white;
+      box-shadow: 0 4px 16px rgba(10,107,76,0.3);
+    }
+    .schedule-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 1rem; }
+    .day-col {
+      background: white;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+      box-shadow: var(--shadow-sm);
+    }
+    .day-header {
+      padding: 1rem;
+      text-align: center;
+      font-weight: 700;
+      font-size: 0.88rem;
+    }
+    .day-mon .day-header { background: rgba(10,107,76,0.08); color: var(--emerald); }
+    .day-tue .day-header { background: rgba(59,130,246,0.08); color: #2563eb; }
+    .day-thu .day-header { background: rgba(212,146,10,0.08); color: var(--gold); }
+    .day-fri .day-header { background: rgba(239,68,68,0.08); color: #dc2626; }
+    .day-sat .day-header { background: rgba(139,92,246,0.08); color: #7c3aed; }
+    .day-classes { padding: 0.75rem; display: flex; flex-direction: column; gap: 0.6rem; }
+    .class-block {
+      border-radius: 10px;
+      padding: 0.85rem;
+      cursor: default;
+      transition: transform 0.2s;
+    }
+    .class-block:hover { transform: scale(1.02); }
+    .cb-time { font-size: 0.7rem; font-weight: 700; letter-spacing: 0.04em; margin-bottom: 0.35rem; opacity: 0.7; }
+    .cb-name { font-size: 0.82rem; font-weight: 700; margin-bottom: 0.2rem; }
+    .cb-sub { font-size: 0.72rem; opacity: 0.75; }
+    .cb-mode { display: inline-flex; align-items: center; gap: 0.3rem; font-size: 0.65rem; font-weight: 700; padding: 0.15rem 0.5rem; border-radius: 50px; margin-top: 0.4rem; }
+    .cb-green { background: rgba(10,107,76,0.1); color: var(--emerald); }
+    .cb-blue { background: rgba(59,130,246,0.1); color: #2563eb; }
+    .cb-gold { background: rgba(212,146,10,0.1); color: var(--gold); }
+    .cb-red { background: rgba(239,68,68,0.1); color: #dc2626; }
+    .cb-purple { background: rgba(139,92,246,0.1); color: #7c3aed; }
+    .class-math { background: linear-gradient(135deg, rgba(10,107,76,0.07), rgba(10,107,76,0.03)); border: 1px solid rgba(10,107,76,0.12); color: var(--dark); }
+    .class-sinhala { background: linear-gradient(135deg, rgba(59,130,246,0.07), rgba(59,130,246,0.03)); border: 1px solid rgba(59,130,246,0.12); color: var(--dark); }
+    .class-env { background: linear-gradient(135deg, rgba(34,197,94,0.07), rgba(34,197,94,0.03)); border: 1px solid rgba(34,197,94,0.12); color: var(--dark); }
+    .class-online { background: linear-gradient(135deg, rgba(139,92,246,0.07), rgba(139,92,246,0.03)); border: 1px solid rgba(139,92,246,0.12); color: var(--dark); }
+    .class-paper { background: linear-gradient(135deg, rgba(212,146,10,0.07), rgba(212,146,10,0.03)); border: 1px solid rgba(212,146,10,0.12); color: var(--dark); }
+    .free-slot {
+      padding: 1rem;
+      text-align: center;
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+
+    /* INFO CARDS */
+    .info-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.25rem; margin-bottom: 3rem; }
+    .info-c {
+      background: white;
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      text-align: center;
+      border: 1px solid var(--border);
+    }
+    .info-c .icon { font-size: 2rem; margin-bottom: 0.75rem; }
+    .info-c h4 { font-size: 0.88rem; font-weight: 700; margin-bottom: 0.25rem; }
+    .info-c p { font-size: 0.78rem; color: var(--text-muted); }
+
+    /* LEGEND */
+    .legend { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 2rem; }
+    .legend-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; font-weight: 600; color: var(--text-muted); }
+    .legend-dot { width: 10px; height: 10px; border-radius: 3px; }
+
+    @media (max-width: 900px) {
+      .schedule-grid { grid-template-columns: 1fr 1fr; }
+      .info-row { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .schedule-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+<nav class="navbar scrolled" id="navbar">
+  <div class="nav-brand">
+    <div class="nav-logo-mark">🌿</div>
+    <div class="nav-brand-text">
+      <span class="nav-brand-name">Padmini Athukorala</span>
+      <span class="nav-brand-sub">Grade 5 Scholarship Teacher</span>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="../index.html">Home</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="subjects.html">Subjects</a></li>
+    <li><a href="schedule.html" class="active">Schedule</a></li>
+    <li><a href="videos.html">Videos</a></li>
+    <li><a href="reviews.html">Reviews</a></li>
+    <li><a href="contact.html" class="nav-cta">📞 Enroll Now</a></li>
+  </ul>
+  <div class="hamburger"><span></span><span></span><span></span></div>
+</nav>
+<div class="mobile-menu">
+  <ul>
+    <li><a href="../index.html">🏠 Home</a></li>
+    <li><a href="about.html">👩‍🏫 About</a></li>
+    <li><a href="subjects.html">📚 Subjects</a></li>
+    <li><a href="schedule.html">📅 Schedule</a></li>
+    <li><a href="videos.html">🎥 Videos</a></li>
+    <li><a href="reviews.html">⭐ Reviews</a></li>
+    <li><a href="contact.html">📞 Contact</a></li>
+  </ul>
+</div>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="page-header-badge">📅 Class Timetable</div>
+    <h1 class="si">පන්ති කාලසටහන</h1>
+    <p class="si">Physical සහ Online classes — ඔබේ දරුවාට හොඳම time select කරන්න</p>
+  </div>
+</div>
+
+<section class="schedule-wrap">
+  <div class="container">
+    <div class="info-row">
+      <div class="info-c fade-up">
+        <div class="icon">🏫</div>
+        <h4>Physical Classes</h4>
+        <p class="si">Colombo — නිවසේ දී classes</p>
+      </div>
+      <div class="info-c fade-up fade-up-delay-1">
+        <div class="icon">💻</div>
+        <h4>Online Classes</h4>
+        <p>Zoom / Google Meet via WhatsApp</p>
+      </div>
+      <div class="info-c fade-up fade-up-delay-2">
+        <div class="icon">👥</div>
+        <h4 class="si">Group Size</h4>
+        <p class="si">Max 8 students per batch</p>
+      </div>
+      <div class="info-c fade-up fade-up-delay-3">
+        <div class="icon">⏰</div>
+        <h4>Duration</h4>
+        <p>2 hours per class</p>
+      </div>
+    </div>
+
+    <div class="legend">
+      <div class="legend-item"><div class="legend-dot" style="background:rgba(10,107,76,0.4)"></div>ගණිතය</div>
+      <div class="legend-item"><div class="legend-dot" style="background:rgba(59,130,246,0.4)"></div>සිංහල</div>
+      <div class="legend-item"><div class="legend-dot" style="background:rgba(34,197,94,0.4)"></div>පරිසරය</div>
+      <div class="legend-item"><div class="legend-dot" style="background:rgba(139,92,246,0.4)"></div>Online</div>
+      <div class="legend-item"><div class="legend-dot" style="background:rgba(212,146,10,0.4)"></div>Paper Class</div>
+    </div>
+
+    <div class="schedule-grid">
+      <!-- MONDAY -->
+      <div class="day-col day-mon fade-up">
+        <div class="day-header">සඳුදා 🗓️<br/><span style="font-size:0.7rem;font-weight:400">Monday</span></div>
+        <div class="day-classes">
+          <div class="class-block class-math">
+            <div class="cb-time">4:00 – 6:00 PM</div>
+            <div class="cb-name si">ගණිතය</div>
+            <div class="cb-sub">Batch A — Advanced</div>
+            <div class="cb-mode cb-green">🏫 Physical</div>
+          </div>
+          <div class="class-block class-sinhala">
+            <div class="cb-time">6:30 – 8:30 PM</div>
+            <div class="cb-name si">සිංහල</div>
+            <div class="cb-sub si">Grammar + Comprehension</div>
+            <div class="cb-mode cb-blue">🏫 Physical</div>
+          </div>
+        </div>
+      </div>
+      <!-- TUESDAY -->
+      <div class="day-col day-tue fade-up fade-up-delay-1">
+        <div class="day-header">අඟහරුවාදා 🗓️<br/><span style="font-size:0.7rem;font-weight:400">Tuesday</span></div>
+        <div class="day-classes">
+          <div class="class-block class-online">
+            <div class="cb-time">4:00 – 6:00 PM</div>
+            <div class="cb-name si">ගණිතය (Online)</div>
+            <div class="cb-sub">Batch B — Beginner</div>
+            <div class="cb-mode cb-purple">💻 Online</div>
+          </div>
+          <div class="class-block class-env">
+            <div class="cb-time">6:30 – 8:00 PM</div>
+            <div class="cb-name si">පරිසරය</div>
+            <div class="cb-sub si">Science + Social</div>
+            <div class="cb-mode cb-green">🏫 Physical</div>
+          </div>
+        </div>
+      </div>
+      <!-- WEDNESDAY - Free -->
+      <div class="day-col" style="background:rgba(0,0,0,0.01)">
+        <div class="day-header" style="background:rgba(0,0,0,0.03);color:var(--text-muted)">බදාදා<br/><span style="font-size:0.7rem">Wednesday</span></div>
+        <div class="free-slot">🌿 Rest Day<br/>Parent Consultation Available</div>
+      </div>
+      <!-- THURSDAY -->
+      <div class="day-col day-thu fade-up fade-up-delay-1">
+        <div class="day-header">බ්‍රහස්පතිරාදා 🗓️<br/><span style="font-size:0.7rem;font-weight:400">Thursday</span></div>
+        <div class="day-classes">
+          <div class="class-block class-math">
+            <div class="cb-time">4:00 – 6:00 PM</div>
+            <div class="cb-name si">ගණිතය</div>
+            <div class="cb-sub">Batch C — Standard</div>
+            <div class="cb-mode cb-green">🏫 Physical</div>
+          </div>
+          <div class="class-block class-online">
+            <div class="cb-time">7:00 – 9:00 PM</div>
+            <div class="cb-name si">Online Special</div>
+            <div class="cb-sub si">All Subjects Revision</div>
+            <div class="cb-mode cb-purple">💻 Online</div>
+          </div>
+        </div>
+      </div>
+      <!-- SATURDAY -->
+      <div class="day-col day-sat fade-up fade-up-delay-2">
+        <div class="day-header">සෙනසුරාදා 🗓️<br/><span style="font-size:0.7rem;font-weight:400">Saturday</span></div>
+        <div class="day-classes">
+          <div class="class-block class-paper">
+            <div class="cb-time">8:00 – 10:00 AM</div>
+            <div class="cb-name">Paper Class</div>
+            <div class="cb-sub si">Past Paper Practice</div>
+            <div class="cb-mode cb-gold">📝 Physical</div>
+          </div>
+          <div class="class-block class-math">
+            <div class="cb-time">10:30 AM – 12:30 PM</div>
+            <div class="cb-name si">ගණිතය (Intensive)</div>
+            <div class="cb-sub">Premium Students</div>
+            <div class="cb-mode cb-green">🏫 Physical</div>
+          </div>
+          <div class="class-block class-online">
+            <div class="cb-time">3:00 – 5:00 PM</div>
+            <div class="cb-name si">Online Batch</div>
+            <div class="cb-sub si">All Island Students</div>
+            <div class="cb-mode cb-purple">💻 Online</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top:3rem;background:white;border-radius:var(--radius-lg);padding:2rem;border:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.5rem;">
+      <div>
+        <h3 class="si" style="font-family:'DM Serif Display',serif;font-size:1.4rem;margin-bottom:0.5rem">ඔබේ Slot Reserve කරන්න</h3>
+        <p style="color:var(--text-muted);font-size:0.9rem" class="si">Places are limited — WhatsApp message කරන්න.</p>
+      </div>
+      <div style="display:flex;gap:1rem;flex-wrap:wrap">
+        <a href="contact.html" class="btn btn-primary">📅 Book a Slot</a>
+        <a href="javascript:void(0)" class="btn btn-whatsapp" onclick="document.querySelector('.whatsapp-float').click()">💬 WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="whatsapp-float">
+  <div class="whatsapp-tooltip">Book a Class!</div>
+  <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</div>
+<footer class="footer">
+  <div class="footer-bottom" style="max-width:1100px;margin:0 auto;padding:2rem 0;">
+    <span>© 2025 Padmini Athukorala. All rights reserved.</span>
+    <span>Made with ❤️ for education</span>
+  </div>
+</footer>
+<script src="../js/main.js"></script>
+</body>
+</html>

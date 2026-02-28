@@ -1,0 +1,775 @@
+<!DOCTYPE html>
+<html lang="si">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Padmini Athukorala | ශිෂ්‍යත්ව ගුරුතුමිය</title>
+  <meta name="description" content="ශ්‍රී ලංකාවේ හොඳම ශිෂ්‍යත්ව ගුරුතුමිය. Grade 5 Scholarship exam ලබා ගැනීමට expert guidance."/>
+  <link rel="stylesheet" href="css/style.css"/>
+  <style>
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(135deg, var(--dark) 0%, var(--dark-mid) 55%, #103d2c 100%);
+      display: flex;
+      align-items: center;
+      padding: 6rem 2rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg-pattern {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        radial-gradient(circle at 20% 50%, rgba(20,184,127,0.08) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(212,146,10,0.08) 0%, transparent 40%),
+        radial-gradient(circle at 60% 80%, rgba(20,184,127,0.05) 0%, transparent 40%);
+    }
+    .hero-dots {
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle, rgba(255,255,255,0.04) 1px, transparent 1px);
+      background-size: 40px 40px;
+    }
+    .hero-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(212,146,10,0.12);
+      border: 1px solid rgba(212,146,10,0.25);
+      color: var(--gold-light);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.45rem 1rem;
+      border-radius: 50px;
+      margin-bottom: 1.5rem;
+      animation: fadeInDown 0.6s ease both;
+    }
+    .hero-badge .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold-light); animation: blink 1.5s infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    @keyframes fadeInDown { from{opacity:0;transform:translateY(-16px)} to{opacity:1;transform:none} }
+    @keyframes fadeInUp { from{opacity:0;transform:translateY(24px)} to{opacity:1;transform:none} }
+    @keyframes fadeInRight { from{opacity:0;transform:translateX(40px)} to{opacity:1;transform:none} }
+
+    .hero h1 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      color: white;
+      line-height: 1.1;
+      margin-bottom: 1.25rem;
+      animation: fadeInUp 0.6s 0.15s ease both;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--gold-light);
+      display: block;
+    }
+    .hero-desc {
+      color: rgba(255,255,255,0.7);
+      font-size: 1.05rem;
+      margin-bottom: 2rem;
+      line-height: 1.8;
+      animation: fadeInUp 0.6s 0.25s ease both;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      animation: fadeInUp 0.6s 0.35s ease both;
+    }
+    .hero-tags {
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+      margin-top: 2rem;
+      animation: fadeInUp 0.6s 0.45s ease both;
+    }
+    .hero-tag {
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.7);
+      font-size: 0.78rem;
+      font-weight: 500;
+      padding: 0.35rem 0.85rem;
+      border-radius: 50px;
+    }
+    /* Hero visual */
+    .hero-visual {
+      position: relative;
+      animation: fadeInRight 0.7s 0.2s ease both;
+    }
+    .hero-avatar-wrap {
+      position: relative;
+      width: 340px;
+      margin: 0 auto;
+    }
+    .hero-avatar-ring {
+      position: absolute;
+      inset: -16px;
+      border-radius: 50%;
+      border: 2px solid rgba(20,184,127,0.2);
+      animation: spin 20s linear infinite;
+    }
+    .hero-avatar-ring::before {
+      content: '';
+      position: absolute;
+      width: 12px; height: 12px;
+      background: var(--gold-light);
+      border-radius: 50%;
+      top: 10%;
+      right: 5%;
+      box-shadow: 0 0 12px var(--gold-light);
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .hero-avatar {
+      width: 280px; height: 280px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0d8a62, #14b87f, #0a6b4c);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 7rem;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 6px rgba(20,184,127,0.1), 0 0 0 12px rgba(20,184,127,0.05);
+      position: relative;
+      z-index: 1;
+    }
+    .hero-float-card {
+      position: absolute;
+      background: rgba(255,255,255,0.95);
+      backdrop-filter: blur(12px);
+      border-radius: 14px;
+      padding: 0.75rem 1.1rem;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text);
+      white-space: nowrap;
+      animation: float 3s ease-in-out infinite;
+    }
+    .hero-float-card .icon { font-size: 1.2rem; }
+    .hero-float-card-1 { bottom: 20px; left: -30px; animation-delay: 0s; }
+    .hero-float-card-2 { top: 30px; right: -20px; animation-delay: 1s; }
+    .hero-float-card-3 { top: 50%; left: -40px; animation-delay: 0.5s; }
+    @keyframes float {
+      0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)}
+    }
+    .fc-dot { width: 8px; height: 8px; border-radius: 50%; }
+    .fc-green { background: #25d366; }
+    .fc-gold { background: var(--gold); }
+    .fc-emerald { background: var(--emerald-light); }
+
+    /* ===== STATS BAR ===== */
+    .stats-bar {
+      background: white;
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 2rem;
+    }
+    .stats-bar-inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+    }
+    .stat-item { text-align: center; }
+    .stat-number {
+      font-family: 'DM Serif Display', serif;
+      font-size: 2.6rem;
+      color: var(--emerald);
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+    .stat-label {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-weight: 500;
+    }
+    .stat-divider {
+      width: 1px;
+      background: var(--border);
+      align-self: stretch;
+    }
+
+    /* ===== WHY SECTION ===== */
+    .why-section { background: var(--cream); }
+    .why-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .why-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    .why-card {
+      background: white;
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      transition: all 0.3s;
+    }
+    .why-card:hover {
+      border-color: var(--emerald);
+      box-shadow: var(--shadow-md);
+      transform: translateY(-4px);
+    }
+    .why-card-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      margin-bottom: 1rem;
+    }
+    .why-card h3 { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.4rem; }
+    .why-card p { font-size: 0.82rem; color: var(--text-muted); line-height: 1.6; }
+    .why-card-1 .why-card-icon { background: rgba(10,107,76,0.1); }
+    .why-card-2 .why-card-icon { background: rgba(212,146,10,0.1); }
+    .why-card-3 .why-card-icon { background: rgba(59,130,246,0.1); }
+    .why-card-4 .why-card-icon { background: rgba(239,68,68,0.1); }
+
+    /* ===== SUBJECTS PREVIEW ===== */
+    .subjects-preview { background: white; }
+    .subjects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      margin-bottom: 2.5rem;
+    }
+    .subject-card-home {
+      background: var(--cream);
+      border-radius: var(--radius);
+      padding: 2rem;
+      border: 1px solid var(--border);
+      transition: all 0.3s;
+      cursor: pointer;
+      text-align: center;
+    }
+    .subject-card-home:hover {
+      transform: translateY(-6px);
+      box-shadow: var(--shadow-md);
+      border-color: var(--emerald);
+      background: white;
+    }
+    .subject-emoji { font-size: 2.8rem; margin-bottom: 1rem; }
+    .subject-card-home h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--dark); }
+    .subject-card-home p { font-size: 0.82rem; color: var(--text-muted); }
+    .subject-badge {
+      display: inline-block;
+      background: rgba(10,107,76,0.08);
+      color: var(--emerald);
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 0.25rem 0.65rem;
+      border-radius: 50px;
+      margin-top: 0.75rem;
+    }
+
+    /* ===== VIDEO SECTION ===== */
+    .video-section { background: var(--dark); }
+    .video-section .section-title { color: white; }
+    .video-section .section-subtitle { color: rgba(255,255,255,0.6); }
+    .video-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 1.25rem;
+    }
+    .video-card {
+      background: rgba(255,255,255,0.05);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: var(--radius);
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .video-card:hover { transform: translateY(-4px); border-color: var(--emerald-light); box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
+    .video-thumb {
+      background: linear-gradient(135deg, #0d3d28, #0a6b4c);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .video-card-main .video-thumb { height: 220px; }
+    .video-card-side .video-thumb { height: 120px; }
+    .video-play-btn {
+      width: 56px; height: 56px;
+      background: rgba(255,255,255,0.15);
+      border: 2px solid rgba(255,255,255,0.4);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.4rem;
+      transition: all 0.3s;
+      backdrop-filter: blur(4px);
+    }
+    .video-card-side .video-play-btn { width: 40px; height: 40px; font-size: 1rem; }
+    .video-card:hover .video-play-btn { background: var(--emerald); border-color: var(--emerald); transform: scale(1.1); }
+    .video-subject-tag {
+      position: absolute;
+      top: 10px; left: 10px;
+      background: rgba(10,107,76,0.85);
+      color: white;
+      font-size: 0.7rem;
+      font-weight: 700;
+      padding: 0.2rem 0.6rem;
+      border-radius: 50px;
+    }
+    .video-info { padding: 1rem 1.25rem; }
+    .video-info h4 { font-size: 0.88rem; font-weight: 600; color: white; margin-bottom: 0.25rem; }
+    .video-info span { font-size: 0.75rem; color: rgba(255,255,255,0.5); }
+    .video-card-main .video-info h4 { font-size: 1rem; }
+    .video-side-list { display: flex; flex-direction: column; gap: 1.25rem; }
+
+    /* ===== VIDEO MODAL ===== */
+    #videoModal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 9000;
+      align-items: center;
+      justify-content: center;
+    }
+    #videoModal.open { display: flex; }
+    .modal-inner {
+      position: relative;
+      width: 90%;
+      max-width: 900px;
+    }
+    .modal-close {
+      position: absolute;
+      top: -40px; right: 0;
+      color: white;
+      font-size: 1.5rem;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 0.5rem;
+    }
+    .modal-inner iframe {
+      width: 100%;
+      aspect-ratio: 16/9;
+      border-radius: var(--radius);
+      border: none;
+    }
+
+    /* ===== CTA SECTION ===== */
+    .cta-section {
+      background: linear-gradient(135deg, var(--emerald) 0%, #0d8a62 50%, var(--emerald-light) 100%);
+      padding: 5rem 2rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .cta-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.06) 0%, transparent 50%),
+                        radial-gradient(circle at 70% 50%, rgba(255,255,255,0.04) 0%, transparent 50%);
+    }
+    .cta-inner { position: relative; z-index: 1; }
+    .cta-section h2 {
+      font-family: 'DM Serif Display', serif;
+      font-size: clamp(1.8rem,4vw,3rem);
+      color: white;
+      margin-bottom: 1rem;
+    }
+    .cta-section p { color: rgba(255,255,255,0.8); font-size: 1rem; margin-bottom: 2rem; }
+    .cta-buttons { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+    .btn-white {
+      background: white;
+      color: var(--emerald);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+    }
+    .btn-white:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.2); }
+
+    /* RESPONSIVE */
+    @media (max-width: 900px) {
+      .hero-inner { grid-template-columns: 1fr; text-align: center; }
+      .hero-visual { display: none; }
+      .hero-actions { justify-content: center; }
+      .hero-tags { justify-content: center; }
+      .why-grid { grid-template-columns: 1fr; }
+      .subjects-grid { grid-template-columns: 1fr 1fr; }
+      .video-grid { grid-template-columns: 1fr; }
+      .video-card-main { display: block; }
+      .stats-bar-inner { grid-template-columns: repeat(2,1fr); }
+      .stat-divider { display: none; }
+    }
+    @media (max-width: 600px) {
+      .subjects-grid { grid-template-columns: 1fr; }
+      .why-cards { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+  <div class="nav-brand">
+    <div class="nav-logo-mark">🌿</div>
+    <div class="nav-brand-text">
+      <span class="nav-brand-name">Padmini Athukorala</span>
+      <span class="nav-brand-sub">Grade 5 Scholarship Teacher</span>
+    </div>
+  </div>
+  <ul class="nav-links">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="pages/about.html">About</a></li>
+    <li><a href="pages/subjects.html">Subjects</a></li>
+    <li><a href="pages/schedule.html">Schedule</a></li>
+    <li><a href="pages/videos.html">Videos</a></li>
+    <li><a href="pages/reviews.html">Reviews</a></li>
+    <li><a href="pages/contact.html" class="nav-cta">📞 Enroll Now</a></li>
+  </ul>
+  <div class="hamburger">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu">
+  <ul>
+    <li><a href="index.html">🏠 Home</a></li>
+    <li><a href="pages/about.html">👩‍🏫 About</a></li>
+    <li><a href="pages/subjects.html">📚 Subjects</a></li>
+    <li><a href="pages/schedule.html">📅 Schedule</a></li>
+    <li><a href="pages/videos.html">🎥 Videos</a></li>
+    <li><a href="pages/reviews.html">⭐ Reviews</a></li>
+    <li><a href="pages/contact.html">📞 Contact</a></li>
+  </ul>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg-pattern"></div>
+  <div class="hero-dots"></div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-badge">
+        <div class="dot"></div>
+        ශ්‍රී ලංකාවේ හොඳම Scholarship Teacher
+      </div>
+      <h1>
+        දරුවාගේ සිහිනය
+        <em>සත්‍යයක් කරමු</em>
+      </h1>
+      <p class="hero-desc si">
+        Grade 5 ශිෂ්‍යත්ව විභාගය සාර්ථකව ලබා ගැනීමට නිවැරදි මඟ පෙන්වීම, ඔප්පු කළ ක්‍රමවේදය, සහ 15+ වසරක අත්දැකීම.
+      </p>
+      <div class="hero-actions">
+        <a href="pages/contact.html" class="btn btn-gold">🎓 Enroll Now</a>
+        <a href="pages/videos.html" class="btn btn-outline" style="border-color:rgba(255,255,255,0.4);color:rgba(255,255,255,0.85)">▶ Watch Free Lessons</a>
+      </div>
+      <div class="hero-tags">
+        <span class="hero-tag si">📐 ගණිතය</span>
+        <span class="hero-tag si">🌿 පරිසරය</span>
+        <span class="hero-tag si">📖 සිංහල</span>
+        <span class="hero-tag si">💡 ශිෂ්‍යත්ව Tips</span>
+        <span class="hero-tag">✅ Online & Physical</span>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="hero-avatar-wrap">
+        <div class="hero-avatar-ring"></div>
+        <div class="hero-avatar">👩‍🏫</div>
+        <div class="hero-float-card hero-float-card-1">
+          <div class="fc-dot fc-green"></div>
+          <span>500+ Passed Students</span>
+        </div>
+        <div class="hero-float-card hero-float-card-2">
+          <span class="icon">🏆</span>
+          <span>95% Pass Rate</span>
+        </div>
+        <div class="hero-float-card hero-float-card-3">
+          <div class="fc-dot fc-gold"></div>
+          <span>15+ Years Exp.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-bar-inner">
+    <div class="stat-item fade-up">
+      <div class="stat-number"><span class="counter" data-count="500" data-suffix="+">0+</span></div>
+      <div class="stat-label si">සාර්ථක ශිෂ්‍යයන්</div>
+    </div>
+    <div class="stat-item fade-up fade-up-delay-1">
+      <div class="stat-number"><span class="counter" data-count="95" data-suffix="%">0%</span></div>
+      <div class="stat-label">Pass Rate</div>
+    </div>
+    <div class="stat-item fade-up fade-up-delay-2">
+      <div class="stat-number"><span class="counter" data-count="15" data-suffix="+">0+</span></div>
+      <div class="stat-label">Years Experience</div>
+    </div>
+    <div class="stat-item fade-up fade-up-delay-3">
+      <div class="stat-number"><span class="counter" data-count="50" data-suffix="+">0+</span></div>
+      <div class="stat-label si">Free Videos</div>
+    </div>
+  </div>
+</div>
+
+<!-- WHY SECTION -->
+<section class="why-section">
+  <div class="container">
+    <div class="why-grid">
+      <div class="fade-up">
+        <div class="section-tag">Why Choose Us</div>
+        <h2 class="section-title si">ශිෂ්‍යත්ව ලබා ගැනීමට<br/>නිවැරදිම ගුරු ආයතනය</h2>
+        <p class="section-subtitle si">15+ වසරක සාර්ථකත්වය, ශිෂ්‍යයන් 500+ දෙනෙකු ශිෂ්‍යත්ව ලබා ගත් ක්‍රමවේදය.</p>
+        <div style="margin-top:2rem;">
+          <a href="pages/about.html" class="btn btn-primary">Learn More →</a>
+        </div>
+      </div>
+      <div class="why-cards">
+        <div class="why-card why-card-1 fade-up fade-up-delay-1">
+          <div class="why-card-icon">🏆</div>
+          <h3 si>ඔප්පු කළ ක්‍රමවේදය</h3>
+          <p si>95% pass rate සහිත unique teaching method.</p>
+        </div>
+        <div class="why-card why-card-2 fade-up fade-up-delay-2">
+          <div class="why-card-icon">📊</div>
+          <h3>Progress Tracking</h3>
+          <p si>සෑම දරුවෙකුගේම progress measure කරමු.</p>
+        </div>
+        <div class="why-card why-card-3 fade-up fade-up-delay-3">
+          <div class="why-card-icon">💻</div>
+          <h3>Online + Physical</h3>
+          <p si>ශ්‍රී ලංකාවේ ඕනෑම ස්ථානයකට online classes.</p>
+        </div>
+        <div class="why-card why-card-4 fade-up fade-up-delay-4">
+          <div class="why-card-icon">📱</div>
+          <h3>WhatsApp Support</h3>
+          <p si>Questions, homework help — 24/7 support.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SUBJECTS PREVIEW -->
+<section class="subjects-preview">
+  <div class="container">
+    <div style="text-align:center; margin-bottom:3rem;">
+      <div class="section-tag" style="justify-content:center">Subjects</div>
+      <h2 class="section-title si">ඉගැන්වෙන විෂයයන්</h2>
+      <p class="section-subtitle" style="margin:0 auto si">ශිෂ්‍යත්ව විභාගයේ සෑම විෂයයක්ම expert ලෙස ආවරණය කරමු.</p>
+    </div>
+    <div class="subjects-grid">
+      <div class="subject-card-home fade-up">
+        <div class="subject-emoji">📐</div>
+        <h3 class="si">ගණිතය</h3>
+        <p class="si">Scholarship level mathematics — word problems, fractions, percentages</p>
+        <span class="subject-badge">Most Important</span>
+      </div>
+      <div class="subject-card-home fade-up fade-up-delay-1">
+        <div class="subject-emoji">📖</div>
+        <h3 class="si">සිංහල</h3>
+        <p class="si">Reading comprehension, grammar, essay writing</p>
+        <span class="subject-badge">Full Coverage</span>
+      </div>
+      <div class="subject-card-home fade-up fade-up-delay-2">
+        <div class="subject-emoji">🌿</div>
+        <h3 class="si">පරිසරය</h3>
+        <p class="si">Environmental studies — science & social studies combined</p>
+        <span class="subject-badge">Scholarship Special</span>
+      </div>
+      <div class="subject-card-home fade-up fade-up-delay-1">
+        <div class="subject-emoji">💡</div>
+        <h3>Logical Thinking</h3>
+        <p class="si">Problem solving, IQ questions, lateral thinking</p>
+        <span class="subject-badge">Exam Tips</span>
+      </div>
+      <div class="subject-card-home fade-up fade-up-delay-2">
+        <div class="subject-emoji">📝</div>
+        <h3>Past Papers</h3>
+        <p class="si">10+ years past papers, model papers, timed practice</p>
+        <span class="subject-badge">Exam Ready</span>
+      </div>
+      <div class="subject-card-home fade-up fade-up-delay-3">
+        <div class="subject-emoji">🧠</div>
+        <h3>Exam Strategy</h3>
+        <p class="si">Time management, answering techniques, confidence building</p>
+        <span class="subject-badge">Unique Method</span>
+      </div>
+    </div>
+    <div style="text-align:center;">
+      <a href="pages/subjects.html" class="btn btn-primary">View All Subjects →</a>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO SECTION -->
+<section class="video-section">
+  <div class="container">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:2.5rem;flex-wrap:wrap;gap:1rem;">
+      <div>
+        <div class="section-tag">Free Learning</div>
+        <h2 class="section-title">Educational Videos</h2>
+        <p class="section-subtitle si">Free YouTube videos — ඕනෑ වෙලාවක ඉගෙනගන්න</p>
+      </div>
+      <a href="pages/videos.html" class="btn btn-outline" style="border-color:rgba(255,255,255,0.3);color:rgba(255,255,255,0.8)">All Videos →</a>
+    </div>
+    <div class="video-grid">
+      <div class="video-card video-card-main fade-up" onclick="openVideoModal('dQw4w9WgXcQ')">
+        <div class="video-thumb" style="height:220px">
+          <span class="video-subject-tag si">ගණිතය</span>
+          <div class="video-play-btn">▶</div>
+        </div>
+        <div class="video-info">
+          <h4 class="si">ශිෂ්‍යත්ව ගණිතය — ප්‍රතිශතය & භාගය</h4>
+          <span>42 min • 12K views</span>
+        </div>
+      </div>
+      <div class="video-side-list fade-up fade-up-delay-1">
+        <div class="video-card video-card-side" onclick="openVideoModal('dQw4w9WgXcQ')">
+          <div class="video-thumb">
+            <span class="video-subject-tag si">සිංහල</span>
+            <div class="video-play-btn">▶</div>
+          </div>
+          <div class="video-info">
+            <h4 class="si">රචනා ලිවීම Tips</h4>
+            <span>28 min</span>
+          </div>
+        </div>
+        <div class="video-card video-card-side" onclick="openVideoModal('dQw4w9WgXcQ')">
+          <div class="video-thumb">
+            <span class="video-subject-tag si">පරිසරය</span>
+            <div class="video-play-btn">▶</div>
+          </div>
+          <div class="video-info">
+            <h4 class="si">පරිසරය Full Revision</h4>
+            <span>35 min</span>
+          </div>
+        </div>
+      </div>
+      <div class="video-side-list fade-up fade-up-delay-2">
+        <div class="video-card video-card-side" onclick="openVideoModal('dQw4w9WgXcQ')">
+          <div class="video-thumb">
+            <span class="video-subject-tag">Tips</span>
+            <div class="video-play-btn">▶</div>
+          </div>
+          <div class="video-info">
+            <h4 class="si">Exam Day ගැන Tips</h4>
+            <span>15 min</span>
+          </div>
+        </div>
+        <div class="video-card video-card-side" onclick="openVideoModal('dQw4w9WgXcQ')">
+          <div class="video-thumb">
+            <span class="video-subject-tag">IQ</span>
+            <div class="video-play-btn">▶</div>
+          </div>
+          <div class="video-info">
+            <h4 class="si">IQ Questions Practice</h4>
+            <span>22 min</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="cta-inner fade-up">
+    <h2 class="si">දරුවාගේ ශිෂ්‍යත්ව ලබා ගැනීම<br/>අද ආරම්භ කරන්න</h2>
+    <p class="si">Free trial class — ලියාපදිංචි කරන්න. Places limited.</p>
+    <div class="cta-buttons">
+      <a href="pages/contact.html" class="btn btn-white">📚 Enroll Today</a>
+      <a href="javascript:void(0)" class="btn btn-whatsapp" onclick="document.querySelector('.whatsapp-float').click()">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Chat on WhatsApp
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-brand">
+      <div class="nav-brand">
+        <div class="nav-logo-mark">🌿</div>
+        <div class="nav-brand-text">
+          <span class="nav-brand-name" style="color:white">Padmini Athukorala</span>
+          <span class="nav-brand-sub" style="color:rgba(255,255,255,0.4)">Grade 5 Scholarship Teacher</span>
+        </div>
+      </div>
+      <p class="si">ශිෂ්‍යත්ව දරුවන් සඳහා ශ්‍රී ලංකාවේ හොඳම ගුරු ආශ්‍රයක්. 15+ වසරක් ගණනාවක් ගිය ශිෂ්‍යයන් 500+.</p>
+      <div style="margin-top:1.25rem;">
+        <a href="javascript:void(0)" class="footer-wa-btn" onclick="document.querySelector('.whatsapp-float').click()">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          WhatsApp Now
+        </a>
+      </div>
+    </div>
+    <div>
+      <div class="footer-heading">Quick Links</div>
+      <ul class="footer-links">
+        <li><a href="pages/about.html">About</a></li>
+        <li><a href="pages/subjects.html">Subjects</a></li>
+        <li><a href="pages/schedule.html">Schedule</a></li>
+        <li><a href="pages/videos.html">Videos</a></li>
+        <li><a href="pages/reviews.html">Reviews</a></li>
+        <li><a href="pages/contact.html">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-heading">Contact</div>
+      <ul class="footer-links">
+        <li><a href="tel:+94771234567">📞 +94 77 123 4567</a></li>
+        <li><a href="mailto:padmini@gmail.com">✉️ padmini@gmail.com</a></li>
+        <li><a href="#">📍 Colombo, Sri Lanka</a></li>
+        <li style="margin-top:0.5rem;color:rgba(255,255,255,0.4);font-size:0.82rem">Mon–Sat: 8AM – 8PM</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 Padmini Athukorala. All rights reserved.</span>
+    <span>Made with ❤️ for education</span>
+  </div>
+</footer>
+
+<!-- WHATSAPP FLOAT -->
+<div class="whatsapp-float">
+  <div class="whatsapp-tooltip">Chat with us!</div>
+  <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</div>
+
+<!-- VIDEO MODAL -->
+<div id="videoModal">
+  <div class="modal-inner">
+    <button class="modal-close" onclick="closeVideoModal()">✕</button>
+    <iframe id="videoFrame" allowfullscreen></iframe>
+  </div>
+</div>
+
+<script src="js/main.js"></script>
+</body>
+</html>
